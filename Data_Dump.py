@@ -27,3 +27,4 @@ if __name__ == "__main__":
 
     #Inserting the data to MongoDB
     client[Database_Name][Collection_Name].insert_many(json_record)
+    print("\nData successfully uploaded to MongoDB.")
