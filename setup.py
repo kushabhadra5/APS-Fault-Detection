@@ -21,6 +21,7 @@ def get_requirements()->List[str]:
 
 setup(
     name = "Sensor",
+    version="0.0.2",
     author = "Kushal Bhadra",
     author_email = "kushabhadra5@gmail.com",
     #Here the find_packages() will search for folders with __init__.py filess and consider them as package.
