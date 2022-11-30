@@ -4,18 +4,19 @@ from setuptools import find_packages, setup
 
 from typing import List
 
-Requirements_File_Name = "requirements.txt"
+REQUIREMENT_FILE_NAME="requirements.txt"
 HYPHEN_E_DOT = "-e ."
 
 def get_requirements()->List[str]:
     """This will consist a list of all the libraries and dependencies we are going to require while building the project"""
-    with open(Requirements_File_Name) as requirement_file:
-        requirement_list = requirement_file.readline()
+    with open(REQUIREMENT_FILE_NAME) as requirement_file:
+        requirement_list = requirement_file.readlines()
     requirement_list = [requirement_name.replace("\n", "") for requirement_name in requirement_list]
     
     if HYPHEN_E_DOT in requirement_list:
         requirement_list.remove(HYPHEN_E_DOT)
     return requirement_list
+
 
 
 setup(
