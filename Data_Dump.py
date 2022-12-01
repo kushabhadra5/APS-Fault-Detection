@@ -8,8 +8,8 @@ client = pymongo.MongoClient("mongodb://localhost:27017/neurolabDB")
 
 #Configure the data:
 Dat_File_Path = "/config/workspace/aps_failure_training_set1.csv"
-Database_Name = 'APS_data'
-Collection_Name = 'Sensor'
+Database_Name = 'aps'
+Collection_Name = 'sensor'
 
 if __name__ == "__main__":
     #Loading the data as dataframe

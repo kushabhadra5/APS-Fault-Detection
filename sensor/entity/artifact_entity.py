@@ -1,7 +1,12 @@
 #This file will defines output of each components
 #Here the enities are the components of training pipeline
+from dataclasses import dataclass
 
-class DataIngestionArtifact:...
+@dataclass
+class DataIngestionArtifact:
+    feature_store_file_path:str
+    train_file_path:str 
+    test_file_path:str
 class DataValidationArtifact:...
 class DataTransformationArtifact:...
 class ModelTrainerArtifact:...
