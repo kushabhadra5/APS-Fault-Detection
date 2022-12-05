@@ -1,14 +1,13 @@
-#This will consist of our own exception class
-import sys, os
+import sys,os
 
 def error_message_detail(error, error_detail: sys):
-    '''The ouput of this function will contain the file name , line number and the type of error occured.'''
     _, _, exc_tb = error_detail.exc_info()
     file_name = exc_tb.tb_frame.f_code.co_filename
     error_message = "Error occurred python script name [{0}] line number [{1}] error message [{2}]".format(
         file_name, exc_tb.tb_lineno, str(error)
     )
     return error_message
+
 
 
 class SensorException(Exception):
@@ -19,3 +18,5 @@ class SensorException(Exception):
 
     def __str__(self):
         return self.error_message
+
+
