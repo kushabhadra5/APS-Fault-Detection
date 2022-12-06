@@ -43,19 +43,19 @@ class DataIngestion:
             df:pd.DataFrame  = utils.get_collection_as_dataframe(
                 database_name=self.data_ingestion_config.database_name, 
                 collection_name=self.data_ingestion_config.collection_name)
-            logging.info("Save data in feature store")
+            logging.info("Save data in feature store.")
 
             #replace na with Nan
+            logging.info("Replacing na from DataFrame by NaN.")
             df.replace(to_replace="na",value=np.NAN,inplace=True)
 
-            #Save data in feature store
-            logging.info("Create feature store folder if not available")
-            
             #Create feature store folder if not available
+            logging.info("Create feature store folder if not available.")
             feature_store_dir = os.path.dirname(self.data_ingestion_config.feature_store_file_path)
             os.makedirs(feature_store_dir,exist_ok=True)
             logging.info("Save df to feature store folder")
-            #Save df to feature store folder
+
+            #Saving DataFrame to feature_store folder
             df.to_csv(path_or_buf=self.data_ingestion_config.feature_store_file_path,index=False,header=True)
 
             #split dataset into train and test set    
