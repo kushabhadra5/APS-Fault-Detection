@@ -11,7 +11,12 @@ TARGET_ENCODER_OBJECT_FILE_NAME = "target_encoder.pkl"
 MODEL_FILE_NAME = "model.pkl"
 
 class TrainingPipelineConfig:
+    """
+    Description: 
 
+    This will create a folder name artifact within it timestamp based folders will be created
+    that will contain each and every output file of the components of the training pipeline.
+    """
     def __init__(self):
         try:
             self.artifact_dir = os.path.join(os.getcwd(),"artifact",f"{datetime.now().strftime('%m%d%Y__%H%M%S')}")
@@ -19,8 +24,19 @@ class TrainingPipelineConfig:
             raise SensorException(e,sys)     
 
 
+#The above created class TrainingPipelineConfig will be used as object by each and every class.
 class DataIngestionConfig:
+    """
+    Description:
 
+    This will create a folder name as data_ingestion and its path will be artifact/time_stamp/data_ingestion.
+    Within this folder two more folders will be created:
+    1. feature_store: This will save the complete dataset.
+    2. dataset: This will save training dataset as train.csv and test dataset as test.csv.
+    
+    Here, the dataset is being separated into train_test_split where the test size is equal to 20% of original
+    dataset and train size is 80% of original dataset.
+    """
     def __init__(self,training_pipeline_config:TrainingPipelineConfig):
         try:
             self.database_name="aps"
@@ -32,8 +48,13 @@ class DataIngestionConfig:
             self.test_size = 0.2
         except Exception  as e:
             raise SensorException(e,sys)     
-
+    
     def to_dict(self,)->dict:
+        """
+        Description:
+
+        This function will convert into dictionary.
+        """
         try:
             return self.__dict__
         except Exception  as e:
