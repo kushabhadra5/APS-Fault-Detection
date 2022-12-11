@@ -18,6 +18,12 @@ class DataValidation:
     def __init__(self,
                     data_validation_config:config_entity.DataValidationConfig,
                     data_ingestion_artifact:artifact_entity.DataIngestionArtifact):
+        """
+        Description:
+
+        This is referring the input for Data Validation Training Pipeline.
+        Here, this class is inheriting from config_entity.DataValidationConfig and artifact_entity.DataIngestionArtifact
+        """            
         try:
             logging.info(f"{'>>'*20} Data Validation {'<<'*20}")
             self.data_validation_config = data_validation_config
@@ -30,7 +36,10 @@ class DataValidation:
 
     def drop_missing_values_columns(self,df:pd.DataFrame,report_key_name:str)->Optional[pd.DataFrame]:
         """
-        This function will drop column which contains missing value more than specified threshold
+        Description:
+
+        This function will drop column which contains missing value more than specified threshold value.
+        
         df: Accepts a pandas dataframe
         threshold: Percentage criteria to drop a column
         =====================================================================================
@@ -56,6 +65,11 @@ class DataValidation:
             raise SensorException(e, sys)
 
     def is_required_columns_exists(self,base_df:pd.DataFrame,current_df:pd.DataFrame,report_key_name:str)->bool:
+        """
+        Description:
+
+        Validating number of columns. This will compare the number of columns.
+        """
         try:
            
             base_columns = base_df.columns
@@ -101,20 +115,38 @@ class DataValidation:
                     }
                     #different distribution
 
+            #Finalizing report
             self.validation_error[report_key_name]=drift_report
         except Exception as e:
             raise SensorException(e, sys)
 
     def initiate_data_validation(self)->artifact_entity.DataValidationArtifact:
+        """
+        Description:
+
+        This function will load source DataFrame, train DataFrame and test DataFrame to validate
+        train DataFrame and test DataFrame using source DataFrame. Dropping the missing values column
+        with respect to threshold limit.
+
+        For validation of train and test Data Frame this will compare the following values:
+        1. p-value
+        2. number of columns
+
+        """
         try:
+            #loading base DataFrame for validation
             logging.info(f"Reading base dataframe")
             base_df = pd.read_csv(self.data_validation_config.base_file_path)
+
+            #Replacing na by np.NAN
+            logging.info(f"Replacing na value in base df")
             base_df.replace({"na":np.NAN},inplace=True)
-            logging.info(f"Replace na value in base df")
+            
             #base_df has na as null
-            logging.info(f"Drop null values colums from base df")
+            logging.info(f"Droping null values colums from base df")
             base_df=self.drop_missing_values_columns(df=base_df,report_key_name="missing_values_within_base_dataset")
 
+            #loading train and test DataFrame
             logging.info(f"Reading train dataframe")
             train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
             logging.info(f"Reading test dataframe")

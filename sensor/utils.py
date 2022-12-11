@@ -35,6 +35,11 @@ def get_collection_as_dataframe(database_name:str,collection_name:str)->pd.DataF
     
 
 def write_yaml_file(file_path,data:dict):
+    """
+    Description:
+
+    This function will prepare a detailed report in a dictionary format.
+    """
     try:
         file_dir = os.path.dirname(file_path)
         os.makedirs(file_dir,exist_ok=True)
@@ -44,6 +49,12 @@ def write_yaml_file(file_path,data:dict):
         raise SensorException(e, sys)
 
 def convert_columns_float(df:pd.DataFrame,exclude_columns:list)->pd.DataFrame:
+    """
+    Description:
+
+    This function will convert all the values in a column into float for the columns present in desired
+    DataFrame but not present in excluded_column list.
+    """
     try:
         for column in df.columns:
             if column not in exclude_columns:
