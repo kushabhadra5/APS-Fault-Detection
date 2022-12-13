@@ -43,6 +43,19 @@ class DataTransformation:
 
 
     def initiate_data_transformation(self,) -> artifact_entity.DataTransformationArtifact:
+        """
+        Description:
+        This function will initiate Data Transformation component of Training Pipeline.
+        Following steps will be taking place in Data Transformation component:
+        1. Load train and test DataFrame
+        2. Preparing input features of train and test DataFrame.
+        3. Preparing target column of train and test DataFrame.
+        4. Applying label encoding on the target column.
+        5. Applying transformation on the target column.
+        6. Applying get_data_transformer_object fuction on test and train array.
+        6. Due to imbalance data, SMOTE is applied on training and testing DataFrame.
+        7. Concatenating the input feature and target column for both train and test Dataframe.
+        """
         try:
             #reading training and testing file
             train_df = pd.read_csv(self.data_ingestion_artifact.train_file_path)
@@ -70,8 +83,8 @@ class DataTransformation:
             input_feature_train_arr = transformation_pipleine.transform(input_feature_train_df)
             input_feature_test_arr = transformation_pipleine.transform(input_feature_test_df)
             
-
-            smt = SMOTETomek(sampling_strategy="minority")
+            #Applying SMOTE because there is too much imbalace in both teat and train DataFrame.
+            smt = SMOTETomek(random_state=42)
             logging.info(f"Before resampling in training set Input: {input_feature_train_arr.shape} Target:{target_feature_train_arr.shape}")
             input_feature_train_arr, target_feature_train_arr = smt.fit_resample(input_feature_train_arr, target_feature_train_arr)
             logging.info(f"After resampling in training set Input: {input_feature_train_arr.shape} Target:{target_feature_train_arr.shape}")
@@ -80,8 +93,10 @@ class DataTransformation:
             input_feature_test_arr, target_feature_test_arr = smt.fit_resample(input_feature_test_arr, target_feature_test_arr)
             logging.info(f"After resampling in testing set Input: {input_feature_test_arr.shape} Target:{target_feature_test_arr.shape}")
 
-            #target encoder
+            #Concatenating input_feature_train_arr and target_feature_train_arr as train_arr.
             train_arr = np.c_[input_feature_train_arr, target_feature_train_arr ]
+
+            #Concatenating input_feature_test_arr and target_feature_test_arr as test_arr.
             test_arr = np.c_[input_feature_test_arr, target_feature_test_arr]
 
 

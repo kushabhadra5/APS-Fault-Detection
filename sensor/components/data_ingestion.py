@@ -13,7 +13,6 @@ class DataIngestion:
     def __init__(self,data_ingestion_config:config_entity.DataIngestionConfig ):
         """
         Description:
-
         This function is inheriting DataIngestionConfig class from config_entity to take input for data ingestion
         component of training pipeline.
         """
@@ -26,7 +25,6 @@ class DataIngestion:
     def initiate_data_ingestion(self)->artifact_entity.DataIngestionArtifact:
         """
         Description:
-
         Step 1: This function is creating DataFrame from the dataset and saving it in csv format. 
         Step 2: Replacing "na" in the records by np.NaN.
         Step 3: Storing the DataFrame in artifact/time_stapm/data_ingestion/featurestore, if this directory is not present then the directory will be created.

@@ -20,7 +20,6 @@ class DataValidation:
                     data_ingestion_artifact:artifact_entity.DataIngestionArtifact):
         """
         Description:
-
         This is referring the input for Data Validation Training Pipeline.
         Here, this class is inheriting from config_entity.DataValidationConfig and artifact_entity.DataIngestionArtifact
         """            
@@ -37,7 +36,6 @@ class DataValidation:
     def drop_missing_values_columns(self,df:pd.DataFrame,report_key_name:str)->Optional[pd.DataFrame]:
         """
         Description:
-
         This function will drop column which contains missing value more than specified threshold value.
         
         df: Accepts a pandas dataframe
@@ -67,7 +65,6 @@ class DataValidation:
     def is_required_columns_exists(self,base_df:pd.DataFrame,current_df:pd.DataFrame,report_key_name:str)->bool:
         """
         Description:
-
         Validating number of columns. This will compare the number of columns.
         """
         try:
@@ -123,15 +120,12 @@ class DataValidation:
     def initiate_data_validation(self)->artifact_entity.DataValidationArtifact:
         """
         Description:
-
         This function will load source DataFrame, train DataFrame and test DataFrame to validate
         train DataFrame and test DataFrame using source DataFrame. Dropping the missing values column
         with respect to threshold limit.
-
         For validation of train and test Data Frame this will compare the following values:
         1. p-value
         2. number of columns
-
         """
         try:
             #loading base DataFrame for validation
