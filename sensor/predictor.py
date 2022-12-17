@@ -5,6 +5,21 @@ from typing import Optional
 import os
 
 class ModelResolver:
+    """
+    Description:
+
+    The function of this class to locate latest model, encoded taerget value, transformed DatFrame
+
+    This class consists of following functions:
+    1. get_latest_dir_path:
+    2. get_latest_model_path:
+    3. get_latest_transformer_path
+    4. get_latest_target_encoder_path
+    5. get_latest_save_dir_path
+    6. get_latest_save_model_path
+    7. get_latest_save_transformer_path
+    8. get_latest_save_target_encoder_path
+    """
     
     def __init__(self,model_registry:str = "saved_models",
                 transformer_dir_name="transformer",
@@ -55,7 +70,6 @@ class ModelResolver:
             return os.path.join(latest_dir,self.target_encoder_dir_name,TARGET_ENCODER_OBJECT_FILE_NAME)
         except Exception as e:
             raise e
-
 
     def get_latest_save_dir_path(self)->str:
         try:
