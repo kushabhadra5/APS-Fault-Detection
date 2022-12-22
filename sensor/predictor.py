@@ -8,7 +8,12 @@ class ModelResolver:
     """
     Description:
 
-    The function of this class to locate latest model, encoded taerget value, transformed DatFrame
+    The function of this class to locate the following:
+    1. latest transformed DatFrame file
+    2. latest target encoder file
+    3. latest model file
+
+    If in case the location is not available then to save latest file corresponding to the location. 
 
     This class consists of following functions:
     1. get_latest_dir_path:

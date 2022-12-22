@@ -46,16 +46,21 @@ class DataValidation:
         try:
             
             threshold = self.data_validation_config.missing_threshold
+            #Selecting columns with respective percentage of null values
             null_report = df.isna().sum()/df.shape[0]
             #selecting column name which contains null
             logging.info(f"selecting column name which contains null above to {threshold}")
+            #Creating variable that contain the index of columns to be dropped since they have missing values
+            #more than the threshold limit.
             drop_column_names = null_report[null_report>threshold].index
 
             logging.info(f"Columns to drop: {list(drop_column_names)}")
+            #List the columns to be dropped
             self.validation_error[report_key_name]=list(drop_column_names)
+            #Dropping the columns
             df.drop(list(drop_column_names),axis=1,inplace=True)
 
-            #return None no columns left
+            #return None if no columns left after dropping columns or return the modified dataframe
             if len(df.columns)==0:
                 return None
             return df
