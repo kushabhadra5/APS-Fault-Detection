@@ -5,10 +5,22 @@ import pandas as pd
 from sensor.utils import load_object
 import os,sys
 from datetime import datetime
+import numpy as np
 PREDICTION_DIR="prediction"
+
 
 import numpy as np
 def start_batch_prediction(input_file_path):
+    """
+    Description:
+    This function will initiate batch prediction.
+    Creating prediction directory.
+    Loading DataFrame
+    Load transformer and prepare input array
+    Loading model
+    Predicting data where we use target encoding.
+    Combining prediction and categorical prediction in existing DataFrame
+    """
     try:
         os.makedirs(PREDICTION_DIR,exist_ok=True)
         logging.info(f"Creating model resolver object")
@@ -36,7 +48,7 @@ def start_batch_prediction(input_file_path):
         df["prediction"]=prediction
         df["cat_pred"]=cat_prediction
 
-
+        #Prediction file name will be the basename(removing the extension) and appending timestamp to it.
         prediction_file_name = os.path.basename(input_file_path).replace(".csv",f"{datetime.now().strftime('%m%d%Y__%H%M%S')}.csv")
         prediction_file_path = os.path.join(PREDICTION_DIR,prediction_file_name)
         df.to_csv(prediction_file_path,index=False,header=True)

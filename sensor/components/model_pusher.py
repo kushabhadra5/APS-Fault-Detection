@@ -5,13 +5,15 @@ import os,sys
 from sensor.utils import load_object,save_object
 from sensor.logger import logging
 from sensor.entity.artifact_entity import DataTransformationArtifact,ModelTrainerArtifact,ModelPusherArtifact
+
+
 class ModelPusher:
 
     def __init__(self,model_pusher_config:ModelPusherConfig,
     data_transformation_artifact:DataTransformationArtifact,
     model_trainer_artifact:ModelTrainerArtifact):
         try:
-            logging.info(f"{'>>'*20} Data Transformation {'<<'*20}")
+            logging.info(f"{'>>'*20} Model Pusher {'<<'*20}")
             self.model_pusher_config=model_pusher_config
             self.data_transformation_artifact=data_transformation_artifact
             self.model_trainer_artifact=model_trainer_artifact
@@ -44,6 +46,7 @@ class ModelPusher:
             save_object(file_path=model_path, obj=model)
             save_object(file_path=target_encoder_path, obj=target_encoder)
 
+            #Preparing model pusher artifact
             model_pusher_artifact = ModelPusherArtifact(pusher_model_dir=self.model_pusher_config.pusher_model_dir,
              saved_model_dir=self.model_pusher_config.saved_model_dir)
             logging.info(f"Model pusher artifact: {model_pusher_artifact}")
