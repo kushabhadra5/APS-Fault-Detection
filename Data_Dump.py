@@ -2,9 +2,9 @@
 import pymongo
 import pandas as pd
 import json
+from dotenv import load_dotenv
+from sensor.config import mongo_client
 
-#Connecting to MongoDB load the data:
-client = pymongo.MongoClient("mongodb://localhost:27017/neurolabDB")
 
 #Configure the data:
 Dat_File_Path = "/config/workspace/aps_failure_training_set1.csv"
@@ -26,5 +26,5 @@ if __name__ == "__main__":
     json_record = list(json.loads(df.T.to_json()).values())
 
     #Inserting the data to MongoDB
-    client[Database_Name][Collection_Name].insert_many(json_record)
+    mongo_client[Database_Name][Collection_Name].insert_many(json_record)
     print("\nData successfully uploaded to MongoDB.")
